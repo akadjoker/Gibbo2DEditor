@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Scene>
+  <Layer ID="0">
+    <Camera x="0" y="0" />
+    <GameObjects>
+      <GameObject Name="map" Type="Tileset" Enable="true" Visible="true" Parent="None">
+        <Transform>
+          <Position x="0" y="0" />
+          <Relative x="284" y="297" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Color r="255" g="255" b="255" a="255" />
+        <Image value="tiles.png" />
+        <Map MapWidth="20" MapHeigh="18" TileWidth="24" TileHeigh="24">
+          <Tiles>
+            <Tile PosX="10" PosY="9" WrlX="-240" WrlY="-216" />
+            <Tile PosX="10" PosY="9" WrlX="-240" WrlY="192" />
+            <Tile PosX="10" PosY="9" WrlX="-24" WrlY="-24" />
+            <Tile PosX="10" PosY="9" WrlX="-24" WrlY="0" />
+            <Tile PosX="10" PosY="9" WrlX="0" WrlY="-24" />
+            <Tile PosX="10" PosY="9" WrlX="0" WrlY="0" />
+            <Tile PosX="10" PosY="9" WrlX="216" WrlY="-216" />
+            <Tile PosX="10" PosY="9" WrlX="216" WrlY="192" />
+          </Tiles>
+        </Map>
+        <TileData>6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,6,6,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,6,6,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6
+</TileData>
+      </GameObject>
+      <GameObject Name="star" Type="Sprite" Enable="true" Visible="true" Parent="None">
+        <Transform>
+          <Position x="0" y="0" />
+          <Relative x="284" y="297" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Image value="star.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+    </GameObjects>
+  </Layer>
+</Scene>

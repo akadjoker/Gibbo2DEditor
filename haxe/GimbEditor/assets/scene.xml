@@ -1,0 +1,494 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Scene>
+  <Layer ID="0">
+    <Camera x="0" y="0" />
+    <GameObjects>
+      <GameObject Name="tiles" Type="Tileset" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="1" y="0" />
+          <Relative x="1" y="0" />
+          <World x="-75" y="-63" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Color r="255" g="255" b="255" a="255" />
+        <Image value="tiles.png" />
+        <Map MapWidth="30" MapHeight="30" TileWidth="24" TileHeight="24" />
+        <TileData>6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,1,5,5,5,5,5,5,5,5,5,9,6,6,6,6
+6,6,6,6,1,5,5,5,5,5,9,6,6,6,6,2,0,0,0,0,0,0,0,0,0,10,6,6,6,6
+6,6,6,6,2,0,0,0,0,0,10,6,6,6,6,2,0,0,0,0,0,0,0,0,0,10,6,6,6,6
+6,6,6,6,2,0,0,0,0,0,10,14,5,5,18,2,0,0,0,15,19,0,0,0,0,10,6,6,6,6
+6,6,6,6,2,0,0,0,0,0,10,2,0,0,10,2,0,0,0,10,2,0,0,0,0,10,6,6,6,6
+6,6,6,6,2,0,0,0,0,0,10,2,0,0,10,2,0,0,0,10,2,0,0,0,0,16,5,9,6,6
+6,6,6,6,2,0,0,0,0,0,10,2,0,0,10,2,0,0,0,10,2,0,0,0,0,0,0,10,6,6
+6,6,6,6,2,0,0,0,0,0,10,2,0,0,10,2,0,0,0,16,20,0,0,0,0,0,0,10,6,6
+6,6,6,6,2,0,0,0,0,0,10,2,0,0,10,2,0,0,0,0,0,0,0,0,0,0,0,10,6,6
+6,6,6,6,2,0,0,0,0,0,10,2,0,0,10,2,0,0,0,0,0,0,0,0,0,0,0,16,5,6
+6,6,6,6,2,0,0,0,0,0,10,2,0,0,10,2,0,0,0,0,0,0,0,0,0,0,0,0,0,10
+6,6,6,6,2,0,0,0,0,0,10,2,0,0,10,2,0,0,0,0,0,0,0,0,0,0,0,0,0,10
+6,6,6,6,2,0,0,0,0,0,10,13,7,7,17,3,7,7,7,7,7,7,7,19,0,0,0,0,0,10
+6,6,6,6,2,0,0,0,0,0,10,6,6,6,6,6,6,6,6,6,6,6,6,2,0,0,0,0,0,10
+6,6,6,6,2,0,0,0,0,0,10,6,6,6,6,6,6,6,6,6,6,6,6,2,0,0,0,0,0,10
+6,6,6,6,2,0,0,0,0,0,16,5,5,5,5,5,5,5,5,5,5,5,5,20,0,0,0,0,0,10
+6,1,5,5,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10
+6,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10
+6,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15,19,0,0,0,0,0,15,19,0,0,0,0,10
+6,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,2,0,0,0,0,0,16,20,0,0,0,0,10
+6,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,2,0,0,0,0,0,0,0,0,0,0,0,10
+6,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,2,0,0,0,0,0,0,0,0,0,0,0,10
+6,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,2,0,0,0,0,15,7,7,7,7,7,7,11
+6,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,20,0,0,0,0,10,6,6,6,6,6,6,6
+6,2,0,0,0,0,0,15,7,7,7,19,0,0,0,0,0,0,0,0,0,0,10,6,6,0,6,6,6,6
+6,2,0,0,0,0,0,10,6,6,6,2,0,0,0,0,0,0,0,0,0,0,10,6,0,0,0,6,6,6
+6,2,0,0,0,0,0,10,6,6,6,2,0,0,0,0,0,0,0,0,0,0,10,0,0,0,0,0,0,6
+6,2,0,0,0,0,0,10,6,6,6,2,0,0,0,0,0,0,0,0,0,0,10,6,0,0,0,6,6,6
+6,3,7,7,7,7,7,11,6,6,6,3,7,7,7,7,7,7,7,7,7,7,11,6,6,0,6,6,6,6
+6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6
+</TileData>
+      </GameObject>
+      <GameObject Name="jump" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="89,42635" y="21,25102" />
+          <Relative x="89,42635" y="21,25102" />
+          <World x="373,4263" y="318,251" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Image value="launcher.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="star" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="96,72118" y="173,3215" />
+          <Relative x="96,72118" y="173,3215" />
+          <World x="380,7212" y="470,3215" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Image value="star.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="jump" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="-239,3887" y="-122,0536" />
+          <Relative x="-239,3887" y="-122,0536" />
+          <World x="44,61128" y="174,9464" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Image value="launcher.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="jump" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="147,5439" y="333,0566" />
+          <Relative x="147,5439" y="333,0566" />
+          <World x="431,5439" y="630,0566" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Image value="launcher.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="star" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="172,7089" y="-243,254" />
+          <Relative x="172,7089" y="-243,254" />
+          <World x="456,7089" y="53,74603" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Image value="star.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="star" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="-73,8929" y="276,131" />
+          <Relative x="-73,8929" y="276,131" />
+          <World x="210,1071" y="573,131" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Image value="star.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="star" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="143,1657" y="-16,27306" />
+          <Relative x="143,1657" y="-16,27306" />
+          <World x="427,1657" y="280,7269" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Image value="star.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="jump" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="191,966" y="20,98436" />
+          <Relative x="191,966" y="20,98436" />
+          <World x="475,966" y="317,9844" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Image value="launcher.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="jump" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="235,8839" y="164,2817" />
+          <Relative x="235,8839" y="164,2817" />
+          <World x="519,8839" y="461,2817" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Image value="launcher.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="jump" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="-307,7165" y="238,0386" />
+          <Relative x="-307,7165" y="238,0386" />
+          <World x="-23,71652" y="535,0386" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Image value="launcher.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="spike" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="0" y="331,5652" />
+          <Relative x="0" y="331,5652" />
+          <World x="284" y="628,5652" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Image value="spike.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="spike" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="298,0946" y="162,974" />
+          <Relative x="298,0946" y="162,974" />
+          <World x="582,0946" y="459,974" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Image value="spike.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="spike" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="-149,7436" y="285,0257" />
+          <Relative x="-149,7436" y="285,0257" />
+          <World x="134,2564" y="582,0256" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Image value="spike.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="spike" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="-82,02583" y="-123,6306" />
+          <Relative x="-82,02583" y="-123,6306" />
+          <World x="201,9742" y="173,3694" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Image value="spike.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="star" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="228,2656" y="252,1825" />
+          <Relative x="228,2656" y="252,1825" />
+          <World x="512,2656" y="549,1825" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Image value="star.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="star" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="323,8307" y="252,0609" />
+          <Relative x="323,8307" y="252,0609" />
+          <World x="607,8307" y="549,0609" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Image value="star.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="star" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="275,6497" y="322,6555" />
+          <Relative x="275,6497" y="322,6555" />
+          <World x="559,6498" y="619,6555" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Image value="star.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="spike" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="273,2123" y="-196,3136" />
+          <Relative x="273,2123" y="-196,3136" />
+          <World x="557,2123" y="100,6864" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Image value="spike.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="Tile" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="star" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="276,6879" y="205,5609" />
+          <Relative x="276,6879" y="205,5609" />
+          <World x="560,6879" y="502,5609" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Image value="star.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="slicer" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="-250,8035" y="-48,39285" />
+          <Relative x="-250,8035" y="-48,39285" />
+          <World x="33,19646" y="248,6071" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Image value="slicer.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="slicer" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="-92,05354" y="-48,39285" />
+          <Relative x="-92,05354" y="-48,39285" />
+          <World x="191,9465" y="248,6071" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Image value="slicer.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="turrent" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="-88,875" y="-189,5417" />
+          <Relative x="-88,875" y="-189,5417" />
+          <World x="195,125" y="107,4583" />
+          <Scale x="1" y="1" />
+          <Rotate angle="-3,121241" angleDeg="-179" />
+        </Transform>
+        <Image value="turret.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="turrent" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="-24,20832" y="-189,5417" />
+          <Relative x="-24,20832" y="-189,5417" />
+          <World x="259,7917" y="107,4583" />
+          <Scale x="1" y="1" />
+          <Rotate angle="1,525679" angleDeg="87" />
+        </Transform>
+        <Image value="turret.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="turrent" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="45,125" y="-189,5417" />
+          <Relative x="45,125" y="-189,5417" />
+          <World x="329,125" y="107,4583" />
+          <Scale x="1" y="1" />
+          <Rotate angle="3,137172" angleDeg="180" />
+        </Transform>
+        <Image value="turret.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="turrent" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="-162,875" y="-189,5417" />
+          <Relative x="-162,875" y="-189,5417" />
+          <World x="121,125" y="107,4583" />
+          <Scale x="1" y="1" />
+          <Rotate angle="-1,520797" angleDeg="-87" />
+        </Transform>
+        <Image value="turret.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="meteor" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="0">
+        <Transform>
+          <Position x="0" y="0" />
+          <Relative x="0" y="0" />
+          <World x="284" y="297" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Image value="meteor.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+      <GameObject Name="meteor" Type="Sprite" Enable="true" Visible="true" Parent="None" Children="1">
+        <Child>
+          <GameObject Name="solid" Type="GameObject" Enable="true" Visible="true" Parent="meteor" Children="0">
+            <Transform>
+              <Position x="170" y="-121,25" />
+              <Relative x="570" y="178,75" />
+              <World x="454" y="175,75" />
+              <Scale x="1" y="1" />
+              <Rotate angle="0" angleDeg="0" />
+            </Transform>
+          </GameObject>
+        </Child>
+        <Transform>
+          <Position x="-400" y="-300" />
+          <Relative x="-400" y="-300" />
+          <World x="-116" y="-3" />
+          <Scale x="1" y="1" />
+          <Rotate angle="0" angleDeg="0" />
+        </Transform>
+        <Image value="meteor.png" />
+        <BlendMode value="NonPremultiplied" />
+        <DisplayMode value="None" />
+        <Origin value="Center" />
+        <SourceRectangle x="0" y="0" w="0" h="0" />
+        <Effect value="None" />
+        <Color r="255" g="255" b="255" a="255" />
+      </GameObject>
+    </GameObjects>
+  </Layer>
+</Scene>

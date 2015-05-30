@@ -33,3 +33,10 @@ It's supported by MonoGame, also an open source project.
 Gibbo2D is released under the Gibbo2D License v1.0 (see LICENSE.txt for more info) and some parts under the MIT License.
 
 
+HaxePunk editor Teste
+![log](https://djokergames.files.wordpress.com/2015/05/save.png)
+
+​flash:
+https://3a18463b7415b7e76094543afd026e6e843c99e2.googledrive.com/host/0B9n2UEk_-VqyZVdtMHV1d3AxOUk/GimbEditor.swf
+html5:
+https://bb59e5ada2b6e4d0b9a3ee1a2297db3fba0497b2.googledrive.com/host/0B9n2UEk_-VqyMEhaTmItUG9HUXM/index.html
