@@ -1,0 +1,102 @@
+﻿<UserControl
+    xmlns:WPF="clr-namespace:Gibbo.Editor.WPF"  x:Class="Gibbo.Editor.WPF.PropertyBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" d:DesignWidth="300" Height="auto">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="28"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="24"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="24"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Border Grid.ColumnSpan="3" Background="#404040" BorderThickness="0,0,0,1" BorderBrush="#FF262626" MouseUp="VisibilityHandlerBtn_MouseUp" Cursor="Hand"></Border>
+            <Border Grid.ColumnSpan="3" BorderBrush="#FF535353" BorderThickness="0,1,0,0" Margin="0,0,0,0">
+            </Border>
+            <Image x:Name="VisibilityHandlerBtn" Source="/Gibbo.Editor.WPF;component/Gibbo.Content/_arrow_right.png" Cursor="Hand" MouseUp="VisibilityHandlerBtn_MouseUp" Stretch="Fill" Width="16" Height="16"/>
+            <Image x:Name="SettingsBtn" Source="/Gibbo.Editor.WPF;component/Gibbo.Content/_trash.png" Cursor="Hand" Grid.Column="2" Stretch="Fill" Width="16" Height="16" MouseUp="SettingsBtn_MouseUp"/>
+            <Label x:Name="Title" Grid.Column="1" Content="Transform" Foreground="{DynamicResource ForegroundGray}" VerticalAlignment="Center" Cursor="Hand" HorizontalAlignment="Left" MouseUp="VisibilityHandlerBtn_MouseUp"></Label>
+            <Grid x:Name="PropertyGridContainer" Grid.ColumnSpan="3" Grid.Row="1" Height="auto" Visibility="Collapsed" Background="{DynamicResource PanelBackground}">
+                <xceed:PropertyGrid x:Name="PropertyGrid" FontSize="11" MouseEnter="PropertyGrid_MouseEnter" Margin="0,4,0,2" IsCategorized="True" ShowSortOptions="False">
+                    <xceed:PropertyGrid.Resources>
+                        <Style TargetType="{x:Type xceed:PropertyItemsControl}">
+                            <Setter Property="Foreground" Value="{DynamicResource ForegroundGray}"/>
+                        </Style> 
+                    </xceed:PropertyGrid.Resources>
+                    <xceed:PropertyGrid.EditorDefinitions>
+                        <xceed:EditorDefinition TargetType="{x:Type sys:String}">
+                            <xceed:EditorDefinition.PropertiesDefinitions>
+                                <xceed:PropertyDefinition Name="Tag"/>
+                            </xceed:EditorDefinition.PropertiesDefinitions>
+                            <xceed:EditorDefinition.EditorTemplate>
+                                <DataTemplate>
+                                    <TextBox PreviewKeyDown="TagTextBox_PreviewKeyDown" Height="18" Foreground="#e6e6e6" Style="{DynamicResource IgniteTagTextBox}" Text="{Binding Value}" />
+                                </DataTemplate>
+                            </xceed:EditorDefinition.EditorTemplate>
+                        </xceed:EditorDefinition>
+                        <xceed:EditorDefinition TargetType="{x:Type sys:String}">
+                            <xceed:EditorDefinition.PropertiesDefinitions>
+                                <xceed:PropertyDefinition Name="ImageName"/>
+                            </xceed:EditorDefinition.PropertiesDefinitions>
+                            <xceed:EditorDefinition.EditorTemplate>
+                                <DataTemplate>
+                                    <TextBox Height="18" Foreground="#e6e6e6" Style="{DynamicResource IgnitePathTextBox}" Text="{Binding Value}" />
+                                </DataTemplate>
+                            </xceed:EditorDefinition.EditorTemplate>
+                        </xceed:EditorDefinition>
+                        <!-- TODO: add global extension file import. Any property starting with Path_-->
+                        <xceed:EditorDefinition TargetType="{x:Type sys:String}">
+                            <xceed:EditorDefinition.PropertiesDefinitions>
+                                <xceed:PropertyDefinition Name="FilePath"/>
+                            </xceed:EditorDefinition.PropertiesDefinitions>
+                            <xceed:EditorDefinition.EditorTemplate>
+                                <DataTemplate>
+                                    <TextBox Height="18" Foreground="#e6e6e6" Style="{DynamicResource IgniteAudioPathTextBox}" Text="{Binding Value}" />
+                                </DataTemplate>
+                            </xceed:EditorDefinition.EditorTemplate>
+                        </xceed:EditorDefinition> 
+                        <xceed:EditorDefinition TargetType="{x:Type sys:String}">
+                            <xceed:EditorDefinition.PropertiesDefinitions>
+                                <xceed:PropertyDefinition Name="FntFilePath"/>
+                            </xceed:EditorDefinition.PropertiesDefinitions>
+                            <xceed:EditorDefinition.EditorTemplate>
+                                <DataTemplate>
+                                    <TextBox Height="18" Foreground="#e6e6e6" Style="{DynamicResource IgniteFntPathTextBox}" Text="{Binding Value}" />
+                                </DataTemplate>
+                            </xceed:EditorDefinition.EditorTemplate>
+                        </xceed:EditorDefinition>
+                        <xceed:EditorDefinition TargetType="{x:Type sys:String}">
+                            <xceed:EditorDefinition.PropertiesDefinitions>
+                                <xceed:PropertyDefinition Name="TextureFilePath"/>
+                            </xceed:EditorDefinition.PropertiesDefinitions>
+                            <xceed:EditorDefinition.EditorTemplate>
+                                <DataTemplate>
+                                    <TextBox Height="18" Foreground="#e6e6e6" Style="{DynamicResource IgniteTexturePathTextBox}" Text="{Binding Value}" />
+                                </DataTemplate>
+                            </xceed:EditorDefinition.EditorTemplate>
+                        </xceed:EditorDefinition>
+                        <xceed:EditorDefinition TargetType="{x:Type sys:String}">
+                            <xceed:EditorDefinition.PropertiesDefinitions>
+                                <xceed:PropertyDefinition Name="GlobalFilePath"/>
+                            </xceed:EditorDefinition.PropertiesDefinitions>
+                            <xceed:EditorDefinition.EditorTemplate>
+                                <DataTemplate>
+                                    <TextBox Height="18" Foreground="#e6e6e6" Style="{DynamicResource IgniteGlobalPath}" Text="{Binding Value}" />
+                                </DataTemplate>
+                            </xceed:EditorDefinition.EditorTemplate>
+                        </xceed:EditorDefinition>
+                    </xceed:PropertyGrid.EditorDefinitions>
+                </xceed:PropertyGrid>
+                
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

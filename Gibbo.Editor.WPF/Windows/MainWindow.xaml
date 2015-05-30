@@ -1,0 +1,505 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
+        xmlns:local="clr-namespace:Gibbo.Editor.WPF" xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Controls="clr-namespace:Gibbo.Editor.WPF.Controls" mc:Ignorable="d" x:Class="Gibbo.Editor.WPF.MainWindow"
+        Title="Gibbo 2D" Width="1200" Height="640" Icon="/Gibbo.Editor.WPF;component/Gibbo.Content/logo_modern.png" WindowStyle="None" ResizeMode="CanResize" KeyDown="Window_KeyDown_1" Closing="Window_Closing_1" 
+        xmlns:winformsIntegration="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration" Loaded="Window_Loaded_1"
+        xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
+    >
+    <Window.Resources>
+        <Style x:Key="MiniToolbarMenuItem" TargetType="{x:Type Button}">
+            <Setter Property="BorderThickness" Value="1,0,1,0"/>
+            <Setter Property="BorderBrush" Value="#2e2e2e"/>
+            <Setter Property="Margin" Value="0,-1,0,0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" >
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="#FF616161"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="MiniToolbarMenuItemToggle" TargetType="{x:Type ToggleButton}">
+            <Setter Property="BorderThickness" Value="1,0,1,0"/>
+            <Setter Property="BorderBrush" Value="#2e2e2e"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                        <Border x:Name="border" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" >
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="#FF616161"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="true">
+                                <!--<Setter Property="Background" TargetName="border" Value="#FF616161"/>-->
+                                <Setter Property="Background" TargetName="border">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                            <GradientStop Offset="0" Color="#555"></GradientStop>
+                                            <GradientStop Offset="1" Color="#777"></GradientStop>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="TopBorderBrushLight" Color="#FF4B4B4B"/>
+        <Style x:Key="TabTopBorder" TargetType="{x:Type Border}">
+            <Setter Property="BorderThickness" Value="0,1,0,0"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource TopBorderBrushLight}"/>
+            <Setter Property="Background" Value="{DynamicResource GradientBrush1}"/>
+            <Setter Property="CornerRadius" Value="0"/>
+        </Style>
+    </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="Save" Executed="SaveProject" />
+        <CommandBinding Command="Undo" Executed="UndoKeyBinding" />
+        <CommandBinding Command="Redo" Executed="RedoKeyBinding" />
+        <CommandBinding Command="Copy" Executed="CopyKeyBinding" />
+        <CommandBinding Command="Paste" Executed="PasteKeyBinding" />
+        <CommandBinding Command="local:CommandBindings.FullDebug" Executed="CommandBinding_Executed_1" />
+        <CommandBinding Command="local:CommandBindings.ToCollisionBlock" Executed="CommandBinding_Executed_2" />
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Key="S" Modifiers="Control" Command="Save"/>
+        <KeyBinding Key="Z" Modifiers="Control" Command="Undo"/>
+        <KeyBinding Key="Y" Modifiers="Control" Command="Redo"/>
+        <KeyBinding Key="C" Modifiers="Control" Command="Copy"/>
+        <KeyBinding Key="V" Modifiers="Control" Command="Paste"/>
+        <KeyBinding Key="F5" Modifiers="Control" Command="local:CommandBindings.FullDebug"/>
+        <KeyBinding Key="B" Modifiers="Control" Command="local:CommandBindings.ToCollisionBlock"/>
+    </Window.InputBindings>
+
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo Description="Gibbo2D" ThumbnailClipMargin="5">
+            <TaskbarItemInfo.ThumbButtonInfos>
+                <ThumbButtonInfoCollection>
+                    <ThumbButtonInfo x:Name="ThumbScreenshotButton"
+                                     DismissWhenClicked="False" Click="ThumbScreenshotButton_Click"
+                                     Description="Take Screenshot" 
+                                     ImageSource="/Gibbo.Editor.WPF;component/Gibbo.Content/screenshot.png" />
+                </ThumbButtonInfoCollection>
+            </TaskbarItemInfo.ThumbButtonInfos>
+        </TaskbarItemInfo>
+    </Window.TaskbarItemInfo>
+
+    <Grid x:Name="MainGrid" UseLayoutRounding="True" ShowGridLines="False"  Background="{DynamicResource BackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="350"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Row="0" Grid.ColumnSpan="3" BorderThickness="0, 0, 0, 0" >
+            <Menu Height="24" VerticalAlignment="Center" Style="{DynamicResource MenuStyle}" FontSize="12">
+                <Menu.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF6F6F6" Offset="0.25"/>
+                        <GradientStop Color="#FFEAE8E8" Offset="0.25"/>
+                        <GradientStop Color="#FFDCD9D9" Offset="0.8"/>
+                        <GradientStop Color="#FF6C6C6C" Offset="1"/>
+                    </LinearGradientBrush>
+                </Menu.Background>
+                <MenuItem Header="File" Foreground="#C7C7C7" PreviewMouseLeftButtonDown="MenuItem_PreviewMouseLeftButtonDown_1">
+                    <MenuItem x:Name="newProjectMenuItem" Header="New Project" HorizontalAlignment="Left" Width="200" Click="newProjectMenuItem_Click"/>
+                    <MenuItem x:Name="loadMenuItem" Header="Load Project"  Width="200" Click="loadMenuItem_Click" Icon=""/>
+                    <MenuItem x:Name="loadRecentMenuItem" Header="Load Recent Project" Width="200" Icon=""/>
+                    <Separator HorizontalAlignment="Left" Width="200"/>
+                    <MenuItem x:Name="saveProjectBtn" Header="Save Project" HorizontalAlignment="Left" Width="200" InputGestureText="Ctrl+S" Click="saveProjectBtn_Click"/>
+                    <MenuItem x:Name="saveSceneBtn" Header="Save Scene" HorizontalAlignment="Left" Width="200" Click="saveSceneBtn_Click"/>
+                    <MenuItem x:Name="exportSceneXMLBtn" Header="Export Scene as XML.." HorizontalAlignment="Left" Width="200" Click="exportSceneXMLBtn_Click"/>
+                    <MenuItem x:Name="deployBtn" Header="Deploy Application.." HorizontalAlignment="Left" Width="200" Click="deployBtn_Click"/>
+                    <Separator HorizontalAlignment="Left"  Width="200"/>
+                    <MenuItem x:Name="exitBtn" Header="Exit" HorizontalAlignment="Left"  Width="200" Click="exitBtn_Click"/>
+                </MenuItem>
+                <MenuItem Header="Edit" Foreground="#C7C7C7">
+                    <MenuItem x:Name="undoBtn" Header="Undo" HorizontalAlignment="Left" Width="200" Click="undoBtn_Click"  InputGestureText="Ctrl+Z"/>
+                    <MenuItem x:Name="redoBtn" Header="Redo" HorizontalAlignment="Left" Width="200" Click="redoBtn_Click"  InputGestureText="Ctrl+Y"/>
+                    <Separator HorizontalAlignment="Left" Width="200"/>
+                    <MenuItem Header="Manage Scene Tags" HorizontalAlignment="Left" Width="200" x:Name="manageTagsBtn" Click="manageTagsBtn_Click" />
+                    <Separator HorizontalAlignment="Left" Width="200"/>
+                    <MenuItem Header="Settings" HorizontalAlignment="Left" Width="200" x:Name="projectSettingsBtn" Click="projectSettingsBtn_Click" />
+                    <MenuItem x:Name="sceneSettingsBtn" Header="Scene Settings" HorizontalAlignment="Left" Width="200" Click="sceneSettingsBtn_Click" />
+                </MenuItem>
+                <MenuItem Header="Run" Foreground="#C7C7C7">
+                    <MenuItem Header="Compile Scripts" HorizontalAlignment="Left"  Width="200" InputGestureText="F6" Click="compileBtn_Click"/>
+                    <MenuItem Header="Debug Game" HorizontalAlignment="Left"  Width="200" InputGestureText="F5" Click="debugBtn_Click"/>
+                    <MenuItem Header="Full Debug Game" HorizontalAlignment="Left"  Width="200" InputGestureText="Ctrl+F5" Click="MenuItem_Click_2"/>
+                    <Separator HorizontalAlignment="Left"  Width="200"/>
+                    <MenuItem Header="Clear Texture Buffer" HorizontalAlignment="Left" Width="200" Click="clearTextureBuffBtn_Click"/>
+                </MenuItem>
+                <MenuItem Header="Tools" Foreground="#C7C7C7">
+                    <MenuItem Header="Selection"  Width="200" Icon="">
+                        <MenuItem Header="To Collision Block" HorizontalAlignment="Left" Width="200" InputGestureText="Ctrl+B" Click="convertToCollision_Click"/>
+                        <Separator HorizontalAlignment="Left"  Width="200"/>
+                        <MenuItem Header="Select All" HorizontalAlignment="Left" Width="200" Click="selectAll_Click"/>
+                        <MenuItem Header="Clear All" HorizontalAlignment="Left" Width="200" Click="clearSelection_Click"/>
+                    </MenuItem>
+                    <MenuItem Header="Rotate" HorizontalAlignment="Left"  Width="200" Icon="">
+                        <MenuItem Header="Rotate 180º" HorizontalAlignment="Left" Width="200" Click="rotate180º_Click"/>
+                        <Separator HorizontalAlignment="Left"  Width="200"/>
+                        <MenuItem Header="Rotate 90º" HorizontalAlignment="Left" Width="200" Click="rotate90º_Click"/>
+                        <MenuItem Header="Rotate -90º" HorizontalAlignment="Left" Width="200" Click="rotate90ºInverse_Click"/>
+                        <Separator HorizontalAlignment="Left"  Width="200"/>
+                        <MenuItem Header="Rotate 45º" HorizontalAlignment="Left" Width="200" Click="rotate45º_Click"/>
+                        <MenuItem Header="Rotate -45º" HorizontalAlignment="Left" Width="200" Click="rotate45ºInverse_Click"/>
+                        <Separator HorizontalAlignment="Left" Width="200"/>
+                        <MenuItem Header="Reset" HorizontalAlignment="Left"  Width="200" Click="reset_Click"/>
+                    </MenuItem>
+                    <MenuItem Header="Scale" HorizontalAlignment="Left" Width="200" Visibility="Collapsed">
+                        <MenuItem Header="Numeric Scale.." HorizontalAlignment="Left"  Width="200" Click="numericScale_Click"/>
+                    </MenuItem>
+                    <Separator HorizontalAlignment="Left"  Width="200"/>
+                    <MenuItem Header="BMFont" HorizontalAlignment="Left" Width="200" Click="bmFont_Click" />
+                    <MenuItem Header="Screenshot" HorizontalAlignment="Left" Width="200" Click="MenuItem_Click_4" InputGestureText="F9"/>
+                </MenuItem>
+                <MenuItem Header="Layout" Foreground="#C7C7C7" PreviewMouseDown="LayoutMenuItem_PreviewMouseDown">
+                    <MenuItem x:Name="CurrentLayoutMenuItem" IsEnabled="False" HorizontalAlignment="Center" Visibility="Collapsed"/>
+                    <MenuItem Template="{DynamicResource SimpleMenuItem}" />
+                    <MenuItem Header="Reset to Default" HorizontalAlignment="Left" Width="200" Click="ResetLayoutClick" />
+                    <MenuItem Header="Debug Reset" Click="DebugResetClick" Visibility="Collapsed" />
+                </MenuItem>
+                <!--<MenuItem Header="View" Foreground="#FF212121" >
+                    <MenuItem x:Name="SceneHierarchyMenuItem" Header="Scene Hierarchy"/>
+                <MenuItem Header="View" Foreground="#FF212121" Click="MenuItem_Click_4" >
+                    <MenuItem x:Name="SceneHierarchyMenuItem" Header="Scene Hierarchy" Width="200"/>
+                    <MenuItem x:Name="ProjectExplorerMenuItem" Header="Project Explorer" />
+                    <MenuItem x:Name="InspectorMenuItem" Header="Inspector"/>
+                    <MenuItem x:Name="TilesetMenuItem" Header="Tileset" />
+                    <MenuItem x:Name="SceneViewMenuItem" Header="Scene View" />
+                </MenuItem>-->
+               <MenuItem Header="Tools" Foreground="#FF212121" Visibility="Collapsed">
+                    <MenuItem Header="Visual Scripting.." HorizontalAlignment="Left" Width="200" />
+                </MenuItem>
+                <MenuItem Header="Help" Foreground="#C7C7C7">
+                    <MenuItem Header="Documentation" HorizontalAlignment="Left" Width="200" Click="MenuItem_Click_1" />
+                    <MenuItem Header="GitHub Page" HorizontalAlignment="Left" Width="200" Click="MenuItem_Click_3" />
+                    <Separator HorizontalAlignment="Left" Width="200"/>
+                    <MenuItem Header="Tutorials" HorizontalAlignment="Left" Width="200" Click="MenuItem_tutorial_click" />
+                    <Separator HorizontalAlignment="Left" Width="200"/>
+                    <MenuItem Header="About" HorizontalAlignment="Left" Width="200" x:Name="aboutBtn" Click="aboutBtn_Click" />
+                    <MenuItem Header="Website" HorizontalAlignment="Left" Width="200" Click="websiteBtn_Click"/>
+                    <Separator HorizontalAlignment="Left" Width="200"/>
+                    <MenuItem x:Name="checkForUpdatesBtn" Header="Check for Updates" HorizontalAlignment="Left" Width="200" Click="checkForUpdatesBtn_Click" />
+                </MenuItem>
+            </Menu>
+
+        </Border>
+
+        <Border Grid.Row="3" Grid.Column="0" BorderThickness="0, 0 , 0, 0" Grid.ColumnSpan="3" Background="Transparent">
+            <StatusBar Foreground="WhiteSmoke" Background="{DynamicResource BackgroundBrush}"/>
+        </Border>
+
+        <Grid Grid.Column="1" Grid.Row="1" Margin="0,4,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <DockPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="26">
+                <local:RoundedButtonToggle x:Name="selectBtn" ToolTip="Toggle Select Tool, Shortcut Key: [Q]"  Style="{DynamicResource RoundedButtonStyleToggle}" Content="Select" Foreground="{DynamicResource ForegroundGray}" Width="65" Cursor="Hand" FontSize="11" IsChecked="True" Click="selectBtn_Click" CornerRadius="4,0,0,4" />
+                <local:RoundedButtonToggle x:Name="translateBtn" ToolTip="Toggle Translate Tool, Shortcut Key: [E]"  Style="{DynamicResource RoundedButtonStyleToggle}" BorderThickness="0,1,0,1" Content="Translate" Foreground="{DynamicResource ForegroundGray}" Width="65" Cursor="Hand" FontSize="11" Click="translateBtn_Click" CornerRadius="0" />
+                <local:RoundedButtonToggle x:Name="rotateBtn" ToolTip="Toggle Rotate Tool, Shortcut Keys: [R], [Z] to Snap"  Style="{DynamicResource RoundedButtonStyleToggle}" BorderThickness="1,1,0,1" Content="Rotate" Foreground="{DynamicResource ForegroundGray}" Width="65" Cursor="Hand" FontSize="11" Click="rotateBtn_Click" CornerRadius="0" />
+                <local:RoundedButtonToggle x:Name="scaleBtn" ToolTip="Toggle Scale Tool, Shortcut Key: [T]"  Style="{DynamicResource RoundedButtonStyleToggle}" Content="Scale" Foreground="{DynamicResource ForegroundGray}" Width="65" Cursor="Hand" FontSize="11" Click="scaleBtn_Click" CornerRadius="0,4,4,0" />
+            </DockPanel>
+            <DockPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="26">
+                <local:RoundedButton x:Name="compileBtn" ToolTip="Compile Scripts, Shortcut Key: [F6]" Style="{DynamicResource RoundedButtonStyle}" Content="Compile" Foreground="{DynamicResource ForegroundGray}" Width="80" Cursor="Hand" FontSize="11" Click="compileBtn_Click" CornerRadius="4,0,0,4" />
+                <local:RoundedButton x:Name="fullDebug" ToolTip="Full Debug Game, Shortcut Key: [Ctrl+F5]" Style="{DynamicResource RoundedButtonStyle}" Content="Full Debug" Foreground="{DynamicResource ForegroundGray}" BorderThickness="0,1" Width="80" Cursor="Hand" FontSize="11" Click="fullDebug_Click_1" />
+                <local:RoundedButton x:Name="debugBtn" ToolTip="Debug Game, Shortcut Key: [F5]"  Style="{DynamicResource RoundedButtonStyle}" Content="Debug" BorderThickness="1,1,1,1" Foreground="{DynamicResource ForegroundGray}" Width="80" Cursor="Hand" FontSize="11" Click="debugBtn_Click" CornerRadius="0,4,4,0" />
+            </DockPanel>
+        </Grid>
+        <Grid x:Name="TopRightButtonsGrid" Grid.Column="2" Grid.Row="1">
+            <DockPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="26" >
+                <local:RoundedButton x:Name="fullScreenBtn" ToolTip="Toggle FullScreen, Shortcut Key: [F11]" Style="{DynamicResource RoundedButtonStyle}" Foreground="{DynamicResource ForegroundGray}" Width="120" Cursor="Hand" FontSize="11" Click="fullScreenBtn_Click" Height="26" VerticalAlignment="Top" CornerRadius="4,4,4,4" />
+            </DockPanel>
+        </Grid>
+        <avalonDock:DockingManager x:Name="dockManager" Grid.Row="2" Grid.ColumnSpan="3" AllowMixedOrientation="True" Background="#FF282828" Margin="0,0,0,10" Grid.RowSpan="2">
+            <avalonDock:DockingManager.Theme>
+                <avalonDock:IgniteDarkTheme/>
+            </avalonDock:DockingManager.Theme>
+            <avalonDock:LayoutRoot>
+                <avalonDock:LayoutPanel x:Name="GLOBALPANEL" Orientation="Horizontal">
+                    <avalonDock:LayoutPanel x:Name="SceneHPGroup" Orientation="Vertical" DockWidth="*" >
+                        <avalonDock:LayoutAnchorablePane DockWidth="*">
+                            <avalonDock:LayoutAnchorable ContentId="SceneHierarchyPanel" Title="Scene Hierarchy" x:Name="SceneHiearchyPanelAnchorable" >
+                                <Border BorderBrush="{DynamicResource BorderDark}" BorderThickness="1">
+                                    <Grid>
+                                        <DockPanel LastChildFill="True">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="20"/>
+                                                    <RowDefinition/>
+                                                </Grid.RowDefinitions>
+                                                <Border Grid.Row="0" Margin="0" Style="{DynamicResource TabTopBorder}">
+                                                    <Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource Border}">
+                                                        <StackPanel Margin="4,0,0,0" Orientation="Horizontal">
+                                                            <Button x:Name="addNewItemSceneBtn" Width="70" Height="18" Style="{DynamicResource MiniToolbarMenuItem}" Margin="0" Click="addNewItemSceneBtn_Click">
+                                                                <StackPanel  Orientation="Horizontal">
+                                                                    <Image Source="/Gibbo.Editor.WPF;component/Gibbo.Content/_plus.png" Height="9" Width="9"/>
+                                                                    <TextBlock Text="Add New" Foreground="{DynamicResource ForegroundGray}" Margin="4,0,0,0"/>
+                                                                </StackPanel>
+                                                            </Button>
+                                                            <Button x:Name="refreshSceneBtn" Width="70" Height="18" Style="{DynamicResource MiniToolbarMenuItem}" Margin="0" BorderThickness="0,0,1,0" Click="refreshSceneBtn_Click">
+                                                                <StackPanel  Orientation="Horizontal">
+                                                                    <Image Source="/Gibbo.Editor.WPF;component/Gibbo.Content/_refresh.png" Height="12" Width="12"/>
+                                                                    <TextBlock Text="Refresh" Foreground="{DynamicResource ForegroundGray}" Margin="4,0,0,0"/>
+                                                                </StackPanel>
+                                                            </Button>
+                                                        </StackPanel>
+                                                    </Border>
+                                                </Border>
+                                                <local:SceneHierarchyTreeView x:Name="sceneTreeView" Grid.Row="1" />
+                                            </Grid>
+                                        </DockPanel>
+                                    </Grid>
+                                </Border>
+                            </avalonDock:LayoutAnchorable>
+                        </avalonDock:LayoutAnchorablePane>
+                        <avalonDock:LayoutAnchorablePane DockWidth="*">
+                            <avalonDock:LayoutAnchorable ContentId="ProjectExplorer" Title="Project Explorer">
+                                <Border BorderBrush="{DynamicResource BorderDark}" BorderThickness="1">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="20"/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" Margin="0" Style="{DynamicResource TabTopBorder}">
+                                            <Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource Border}">
+                                                <StackPanel Margin="4,0,0,0" Orientation="Horizontal">
+                                                    <Button x:Name="refreshProjectExplorerBtn" Width="70" Height="18" Style="{DynamicResource MiniToolbarMenuItem}" Margin="0" BorderThickness="1,0,1,0" Click="refreshProjectExplorerBtn_Click">
+                                                        <StackPanel  Orientation="Horizontal">
+                                                            <Image Source="/Gibbo.Editor.WPF;component/Gibbo.Content/_refresh.png" Height="12" Width="12"/>
+                                                            <TextBlock Text="Refresh" Foreground="{DynamicResource ForegroundGray}" Margin="4,0,0,0"/>
+                                                        </StackPanel>
+                                                    </Button>
+                                                </StackPanel>
+                                            </Border>
+                                        </Border>
+                                        <local:ProjectExplorerTreeView x:Name="projectTreeView" Grid.Row="1" />
+                                    </Grid>
+                                </Border>
+                            </avalonDock:LayoutAnchorable>
+                        </avalonDock:LayoutAnchorablePane>
+                    </avalonDock:LayoutPanel>
+
+                    <!-- Scene View and Output Group -->
+                    <avalonDock:LayoutPanel x:Name="SceneViewOGroup" Orientation="Vertical" DockWidth="*">
+                        <avalonDock:LayoutAnchorablePane DockWidth="*" DockHeight="*">
+                            <avalonDock:LayoutAnchorable ContentId="SceneView" Title="Scene View">
+                                <Grid x:Name="SceneViewContainer">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="22"/>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="7" />
+                                        <RowDefinition Height="Auto" MaxHeight="220"/>
+                                    </Grid.RowDefinitions>
+                                    <Border BorderBrush="{DynamicResource BorderDark}" BorderThickness="1, 1, 1, 0">
+                                        <Border Grid.Row="0" Margin="0" Style="{DynamicResource TabTopBorder}">
+                                            <Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource Border}">
+                                                <StackPanel Margin="4,0,0,0" Orientation="Horizontal">
+                                                    <ToggleButton x:Name="showGridBtn" Width="24" Height="18" Style="{DynamicResource MiniToolbarMenuItemToggle}" ToolTip="Toggle Grid, Shortcut Key: [G]" Click="showGridBtn_Click">
+                                                        <Image HorizontalAlignment="Left" Height="14" Width="14" Source="/Gibbo.Editor.WPF;component/Gibbo.Content/_grid.png"/>
+                                                    </ToggleButton>
+                                                    <ToggleButton x:Name="gridSnappingBtn" Width="22" Height="18" Style="{DynamicResource MiniToolbarMenuItemToggle}" ToolTip="Toggle Snapping" BorderThickness="0" Click="gridSnappingBtn_Click">
+                                                        <Image HorizontalAlignment="Left" Height="14" Width="14" Source="/Gibbo.Editor.WPF;component/Gibbo.Content/_grid_snap.png"/>
+                                                    </ToggleButton>
+                                                    <ToggleButton x:Name="showCollisionsBtn" Width="24" Height="18" Style="{DynamicResource MiniToolbarMenuItemToggle}" ToolTip="Toggle Collision Visibility" BorderThickness="1,0,1,0" Click="showCollisionsBtn_Click">
+                                                        <Image HorizontalAlignment="Left" Height="14" Width="14" Source="/Gibbo.Editor.WPF;component/Gibbo.Content/_grid_collisions.png" />
+                                                    </ToggleButton>
+                                                    <ToggleButton x:Name="debugViewBtn" Width="24" Height="18" Style="{DynamicResource MiniToolbarMenuItemToggle}" ToolTip="Toggle Debug View Visibility" Click="debugViewBtn_Click"  BorderThickness="0,0,1,0" >
+                                                        <Image HorizontalAlignment="Left" Height="14" Width="14" Source="/Gibbo.Editor.WPF;component/Gibbo.Content/_debug_view.png" />
+                                                    </ToggleButton>
+                                                    <Grid Width="20"/>
+                                                    <Button x:Name="centerCameraBtn" Width="24" Height="18" Style="{DynamicResource MiniToolbarMenuItem}" Click="centerCameraBtn_Click">
+                                                        <Image HorizontalAlignment="Left" Height="14" Width="14" Source="/Gibbo.Editor.WPF;component/Gibbo.Content/_camera.png" ToolTip="Reset Camera, Shortcut Key: [C]"/>
+                                                    </Button>
+                                                    <Button x:Name="centerCameraObjectBtn" Width="23" Height="18" Style="{DynamicResource MiniToolbarMenuItem}" BorderThickness="0,0,1,0" Click="centerCameraObjectBtn_Click">
+                                                        <Image HorizontalAlignment="Left" Height="14" Width="14" Source="/Gibbo.Editor.WPF;component/Gibbo.Content/_camera_object.png" ToolTip="Center Camera on Selected Object, Shortcut Key: [O]"/>
+                                                    </Button>
+                                                </StackPanel>
+                                            </Border>
+                                        </Border>
+                                    </Border>
+
+                                    <!--<Grid x:Name="SceneViewFormContainer" Grid.Row="1"></Grid>-->
+                                    <Border Grid.Row="1" BorderBrush="{DynamicResource BorderDark}" BorderThickness="1, 0, 1, 1" x:Name="SceneViewFormContainerHolder">
+                                        <winformsIntegration:WindowsFormsHost  x:Name="SceneViewFormContainer" Margin="0"/>
+                                    </Border>
+                                    
+                                    
+                                   
+                                    <GridSplitter Grid.Row="2" Height="7" VerticalAlignment="Center" HorizontalAlignment="Stretch" ShowsPreview="True" Style="{DynamicResource GridSplitterStyle}"/>
+                                    <Border x:Name="OutputExpanderBorder" MinHeight="20" Height="Auto" Grid.Row="3" BorderThickness="1" Margin="0,0,0,0" BorderBrush="{DynamicResource BorderDark}">
+                                        <Expander x:Name="OutputExpander" Header="Output" Style="{StaticResource ExpanderStyleNoPadding}" IsExpanded="False" Collapsed="OutputExpander_Collapsed" Expanded="OutputExpander_Expanded" >
+                                            <Grid x:Name="ExpanderGrid">
+                                                <DataGrid x:Name="OutputDataGrid" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Height="{Binding ElementName=ExpanderGrid, Path=ActualHeight}" Width="Auto" AutoGenerateColumns="False" CanUserResizeRows="False" SelectionUnit="FullRow" IsReadOnly="True" SelectionMode="Single" CanUserAddRows="False" HeadersVisibility="Column" HorizontalGridLinesBrush="#FF1E1E1E" VerticalGridLinesBrush="#FF1E1E1E" HorizontalContentAlignment="Stretch" GridLinesVisibility="None">
+                                                    <DataGrid.ItemContainerStyle>
+                                                        <Style TargetType="DataGridRow">
+                                                            <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                                                            <Setter Property="Background" Value="{DynamicResource BackgroundBrush}"/>
+                                                        </Style>
+                                                    </DataGrid.ItemContainerStyle>
+                                                    <DataGrid.CellStyle>
+                                                        <Style TargetType="DataGridCell">
+                                                            <Setter Property="BorderThickness" Value="0"/>
+                                                        </Style>
+                                                    </DataGrid.CellStyle>
+                                                    <DataGrid.Columns>
+                                                        <DataGridTextColumn Binding="{Binding Time}" Header="Time" Width="100" CanUserSort="False" CanUserReorder="False">
+                                                            <DataGridTextColumn.CellStyle>
+                                                                <Style TargetType="DataGridCell">
+                                                                    <Setter Property="ToolTip" Value="{Binding Time}" />
+                                                                    <Setter Property="BorderThickness" Value="0"/>
+                                                                </Style>
+                                                            </DataGridTextColumn.CellStyle>
+                                                        </DataGridTextColumn>
+                                                        <DataGridTextColumn Binding="{Binding Message}" Header="Message" Width="200*">
+                                                            <DataGridTextColumn.CellStyle>
+                                                                <Style TargetType="DataGridCell">
+                                                                    <Setter Property="ToolTip" Value="{Binding Message}" />
+                                                                    <Setter Property="BorderThickness" Value="0"/>
+                                                                </Style>
+                                                            </DataGridTextColumn.CellStyle>
+                                                        </DataGridTextColumn>
+                                                    </DataGrid.Columns>
+                                                </DataGrid>
+                                            </Grid>
+                                        </Expander>
+                                    </Border>
+                                </Grid>
+                            </avalonDock:LayoutAnchorable>
+                            <avalonDock:LayoutAnchorable x:Name="VisualScriptingAnchorable" ContentId="VisualScriptingView" Title="Scene View" >
+                                <Grid x:Name="VisualScriptingViewContainer" MinWidth="100" MinHeight="100">
+                         
+                                </Grid>
+                            </avalonDock:LayoutAnchorable>
+                        </avalonDock:LayoutAnchorablePane>
+                    </avalonDock:LayoutPanel>
+
+                    <!-- Inspector and Tileset Panels Group -->
+                    <avalonDock:LayoutAnchorablePaneGroup DockWidth="*">
+                        <avalonDock:LayoutAnchorablePane DockWidth="*">
+                            <avalonDock:LayoutAnchorable ContentId="tool1" Title="Inspector">
+                                <Border BorderBrush="{DynamicResource BorderDark}" BorderThickness="1">
+                                    <Grid >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="20"/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" Margin="0" Style="{DynamicResource TabTopBorder}">
+                                            <Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource Border}"/>
+                                        </Border>
+                                        <ScrollViewer SnapsToDevicePixels="True" Margin="0" Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                                            <StackPanel x:Name="PropertyGridContainer" />
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Border>
+                            </avalonDock:LayoutAnchorable>
+                            <avalonDock:LayoutAnchorable  ContentId="tool2" Title="Tileset">
+                                <Border BorderBrush="{DynamicResource BorderDark}" BorderThickness="1">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="20"/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0" Margin="0" Style="{DynamicResource TabTopBorder}">
+                                            <Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource Border}">
+                                                <StackPanel x:Name="tilesetMenuItems" Margin="4,0,0,0" Orientation="Horizontal">
+                                                    <ToggleButton x:Name="pencilTilesetBtn" IsChecked="True" Width="18" Height="18" Style="{DynamicResource MiniToolbarMenuItemToggle}" Margin="0" Click="pencilTilesetBtn_Click" BorderThickness="1,0,0,0" ToolTip="Pencil Tool">
+                                                        <StackPanel  Orientation="Horizontal">
+                                                            <Image Source="/Gibbo.Editor.WPF;component/Gibbo.Content/_pencil.png" Height="12" Width="12"/>
+                                                        </StackPanel>
+                                                    </ToggleButton>
+                                                    <ToggleButton x:Name="rectangleTileset" Width="18" Height="18" Style="{DynamicResource MiniToolbarMenuItemToggle}" Click="rectangleTileset_Click" BorderThickness="1,0,0,0" ToolTip="Rectangle Tool">
+                                                        <StackPanel  Orientation="Horizontal">
+                                                            <Image Source="/Gibbo.Editor.WPF;component/Gibbo.Content/grid_icon.png" Height="12" Width="12"/>
+                                                        </StackPanel>
+                                                    </ToggleButton>
+                                                    <ToggleButton x:Name="rectangleRemoveTileset" Width="18" Height="18" Style="{DynamicResource MiniToolbarMenuItemToggle}" Click="rectangleRemoveTileset_Click" BorderThickness="1,0,1,0" ToolTip="Eraser Tool">
+                                                        <StackPanel  Orientation="Horizontal">
+                                                            <Image Source="/Gibbo.Editor.WPF;component/Gibbo.Content/grid_remove_icon.png" Height="12" Width="12"/>
+                                                        </StackPanel>
+                                                    </ToggleButton>
+                                                    <ToggleButton x:Name="addColumnTileset" Margin="8,0,0,0" Width="18" Height="18" Style="{DynamicResource MiniToolbarMenuItemToggle}" Click="addColumnTileset_Click" BorderThickness="1,0,0,0" ToolTip="Add Column">
+                                                        <StackPanel  Orientation="Horizontal">
+                                                            <Image Source="/Gibbo.Editor.WPF;component/Gibbo.Content/add_column.png" Height="12" Width="12"/>
+                                                        </StackPanel>
+                                                    </ToggleButton>
+                                                    <ToggleButton x:Name="addRowTileset" Width="18" Height="18" Style="{DynamicResource MiniToolbarMenuItemToggle}" Click="addRowTileset_Click" BorderThickness="1,0,0,0" ToolTip="Add Row">
+                                                        <StackPanel  Orientation="Horizontal">
+                                                            <Image Source="/Gibbo.Editor.WPF;component/Gibbo.Content/add_row.png" Height="12" Width="12"/>
+                                                        </StackPanel>
+                                                    </ToggleButton>
+                                                    <ToggleButton x:Name="removeColumnTileset" Width="18" Height="18" Style="{DynamicResource MiniToolbarMenuItemToggle}"  Click="removeColumnTileset_Click" BorderThickness="1,0,0,0" ToolTip="Remove Column">
+                                                        <StackPanel  Orientation="Horizontal">
+                                                            <Image Source="/Gibbo.Editor.WPF;component/Gibbo.Content/remove_column.png" Height="12" Width="12"/>
+                                                        </StackPanel>
+                                                    </ToggleButton>
+                                                    <ToggleButton x:Name="removeRowTileset" Width="18" Height="18" Style="{DynamicResource MiniToolbarMenuItemToggle}"  Click="removeRowTileset_Click" BorderThickness="1,0,1,0" ToolTip="Remove Row">
+                                                        <StackPanel  Orientation="Horizontal">
+                                                            <Image Source="/Gibbo.Editor.WPF;component/Gibbo.Content/remove_row.png" Height="12" Width="12"/>
+                                                        </StackPanel>
+                                                    </ToggleButton>
+                                                    <Button x:Name="shiftLeftTileset" Margin="8,0,0,0" Width="18" Height="18" Style="{DynamicResource MiniToolbarMenuItem}" Click="shiftLeftTileset_Click" BorderThickness="1,0,0,0" ToolTip="Shift Left">
+                                                        <StackPanel  Orientation="Horizontal">
+                                                            <Image Source="/Gibbo.Editor.WPF;component/Gibbo.Content/grid_shift_left.png" Height="12" Width="12"/>
+                                                        </StackPanel>
+                                                    </Button>
+                                                    <Button x:Name="shiftUpTileset" Width="18" Height="18" Style="{DynamicResource MiniToolbarMenuItem}"  Click="shiftUpTileset_Click" BorderThickness="1,0,0,0" ToolTip="Shift Up">
+                                                        <StackPanel  Orientation="Horizontal">
+                                                            <Image Source="/Gibbo.Editor.WPF;component/Gibbo.Content/grid_shift_up.png" Height="12" Width="12"/>
+                                                        </StackPanel>
+                                                    </Button>
+                                                    <Button x:Name="shiftRightTileset" Width="18" Height="18" Style="{DynamicResource MiniToolbarMenuItem}"  Click="shiftRightTileset_Click" BorderThickness="1,0,0,0" ToolTip="Shift Right">
+                                                        <StackPanel  Orientation="Horizontal">
+                                                            <Image Source="/Gibbo.Editor.WPF;component/Gibbo.Content/grid_shift_right.png" Height="12" Width="12"/>
+                                                        </StackPanel>
+                                                    </Button>
+                                                    <Button x:Name="shiftDownTileset" Width="18" Height="18" Style="{DynamicResource MiniToolbarMenuItem}"  Click="shiftDownTileset_Click" BorderThickness="1,0,1,0" ToolTip="Shift Down">
+                                                        <StackPanel  Orientation="Horizontal">
+                                                            <Image Source="/Gibbo.Editor.WPF;component/Gibbo.Content/grid_shift_down.png" Height="12" Width="12"/>
+                                                        </StackPanel>
+                                                    </Button>
+                                                    <Button x:Name="refreshTileset" Margin="8,0,0,0"  Width="65" Height="18" Style="{DynamicResource MiniToolbarMenuItem}"  BorderThickness="1,0,1,0" Click="refreshTileset_Click" >
+                                                        <StackPanel  Orientation="Horizontal">
+                                                            <Image Source="/Gibbo.Editor.WPF;component/Gibbo.Content/_refresh.png" Height="12" Width="12"/>
+                                                            <TextBlock Text="Refresh" Foreground="{DynamicResource ForegroundGray}" Margin="4,0,0,0"/>
+                                                        </StackPanel>
+                                                    </Button>
+                                                </StackPanel>
+                                            </Border>
+                                        </Border>
+                                        <Controls:TilesetBrushControl x:Name="TilesetControl" Grid.Row="2" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
+
+                                    </Grid>
+                                </Border>
+                            </avalonDock:LayoutAnchorable>
+                        </avalonDock:LayoutAnchorablePane>
+                    </avalonDock:LayoutAnchorablePaneGroup>
+
+                </avalonDock:LayoutPanel>
+            </avalonDock:LayoutRoot>
+        </avalonDock:DockingManager>
+    </Grid>
+</Window>

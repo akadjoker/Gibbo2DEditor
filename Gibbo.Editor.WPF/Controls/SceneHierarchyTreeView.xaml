@@ -1,0 +1,23 @@
+﻿<UserControl xmlns:WPF="clr-namespace:Gibbo.Editor.WPF"  x:Class="Gibbo.Editor.WPF.SceneHierarchyTreeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="TreeViewItem">
+                <Setter Property="BorderThickness" Value="1"></Setter>
+                <Style.Triggers>
+                    <Trigger Property="WPF:TreeViewExtension.IsSelected" Value="true">
+                        <Setter Property="Background" Value="Red"></Setter>                 
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"></SolidColorBrush>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"></SolidColorBrush>
+        </Grid.Resources>
+        <WPF:DragDropTreeView x:Name="treeView" WPF:TreeViewExtension.EnableMultiSelect="true" Background="{DynamicResource PanelBackground}" Foreground="{DynamicResource ForegroundGray}" BorderBrush="{DynamicResource PanelBackground}" SelectedItemChanged="treeView_SelectedItemChanged" MouseDown="treeView_MouseDown" MouseLeave="treeView_MouseLeave" MouseUp="treeView_MouseUp"/>
+    </Grid>
+</UserControl>
