@@ -966,6 +966,31 @@ namespace Gibbo.Editor.WPF
             if (GameInput.IsKeyDown(Keys.LeftControl) && GameInput.IsKeyPressed(Keys.C)) EditorCommands.CopySelectedObjects();
             if (GameInput.IsKeyDown(Keys.LeftControl) && GameInput.IsKeyPressed(Keys.V)) EditorCommands.PasteSelectedObjects();
 
+            if (!TileSetMode)
+            { 
+            if (GameInput.IsKeyDown(Keys.LeftControl) && leftMouseKeyDown) 
+            {
+                foreach (GameObject obj in EditorHandler.SelectedGameObjects)
+                {
+                     if(obj is Gibbo.Library.Path)
+                     {
+
+                         Gibbo.Library.Path path = obj as Gibbo.Library.Path;
+                         if(path!=null)
+                         {
+                             path.Points.Add(new Vector2( mouseWorldPosition.X, mouseWorldPosition.Y));
+                             return;
+                         }
+                     }
+                        
+                    
+                }
+
+            }
+        }//****************************
+
+
+
             //if (GameInput.IsKeyDown(Keys.LeftControl) && GameInput.IsKeyDown(Keys.C))
             //{
             //    if (EditorHandler.SelectedGameObjects.Count > 0)

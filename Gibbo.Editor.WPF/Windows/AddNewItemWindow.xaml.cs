@@ -80,6 +80,9 @@ namespace Gibbo.Editor.WPF
                 case 6:
                     itemInfoTextBlock.Text = string.Format("Particle Emiter: \n\nWith a particle emitter you can create great visuals effects for your game by using particles.");
                     break;
+                case 7:
+                    itemInfoTextBlock.Text = string.Format("Path Line : \n\nWith Path Line you can create paths.");
+                    break;
             }
         }
 
@@ -130,6 +133,9 @@ namespace Gibbo.Editor.WPF
                     case 6:
                         obj = new ParticleEmitter();
                         break;
+                    case 7:
+                        obj = new Path();
+                        break;
                 }
 
                 obj.Name = name;
@@ -160,6 +166,16 @@ namespace Gibbo.Editor.WPF
             {
                 MessageBox.Show(ex.Message, "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void ListBoxItem_Selected(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ListBoxItem_Selected_1(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

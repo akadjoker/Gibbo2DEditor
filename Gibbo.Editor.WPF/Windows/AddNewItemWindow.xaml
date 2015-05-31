@@ -49,10 +49,16 @@
                     <TextBlock Margin="4,0,0,0">Bitmap Font</TextBlock>
                 </StackPanel>
             </ListBoxItem>
-            <ListBoxItem>
+            <ListBoxItem Selected="ListBoxItem_Selected_1">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="{DynamicResource GameObjectIcon_Particle}"/>
                     <TextBlock Margin="4,0,0,0">Particle Emitter</TextBlock>
+                </StackPanel>
+            </ListBoxItem>
+            <ListBoxItem Selected="ListBoxItem_Selected">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{DynamicResource GameObjectIcon_Particle}"/>
+                    <TextBlock Margin="4,0,0,0">Path Line</TextBlock>
                 </StackPanel>
             </ListBoxItem>
         </ListBox>
