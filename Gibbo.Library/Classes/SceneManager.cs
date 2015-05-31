@@ -365,7 +365,13 @@ namespace Gibbo.Library
             return true;
         }
 
+        public static XmlElement processNodeBody(XmlDocument xmlDoc, GameObject obj)
+        {
+            XmlElement NodeGameObject = xmlDoc.CreateElement("Body");
+            
 
+            return NodeGameObject;
+        }
         public static XmlElement processNode(XmlDocument xmlDoc, GameObject obj)
         {
             XmlElement NodeGameObject = xmlDoc.CreateElement("GameObject");
@@ -384,11 +390,25 @@ namespace Gibbo.Library
                     if (obj is Tileset)
                     {
                         NodeGameObject.SetAttribute("Type", "Tileset");
-                    }
-                    else
-                    {
-                        NodeGameObject.SetAttribute("Type", "GameObject");
-                    }
+                    } else
+               if (obj is BMFont)
+            {
+                NodeGameObject.SetAttribute("Type", "FontObject");
+            }
+               else
+                   if (obj is AudioObject)
+                   {
+                       NodeGameObject.SetAttribute("Type", "AudioObject");
+                   }
+                   else
+                       if (obj is ParticleEmitter)
+                       {
+                           NodeGameObject.SetAttribute("Type", "ParticleEmitter");
+                       }
+            else
+            {
+                NodeGameObject.SetAttribute("Type", "GameObject");
+            }
 
 
             if (obj.Disabled)
@@ -406,6 +426,12 @@ namespace Gibbo.Library
             { NodeGameObject.SetAttribute("Parent", "None"); }
 
             NodeGameObject.SetAttribute("Children", obj.Children.Count.ToString());
+
+            int cm = obj.GetComponents().Count;
+            NodeGameObject.SetAttribute("Components", cm.ToString());
+
+            
+
             if (obj.Children.Count!=0)
             {
               foreach(GameObject child in obj.Children)
@@ -631,6 +657,334 @@ namespace Gibbo.Library
 
                         }
                     }
+             else
+            if (obj is BMFont)
+            {
+
+                BMFont font = obj as BMFont;
+                if (font != null)
+                {
+
+                    XmlElement color = xmlDoc.CreateElement("Color");
+                    color.SetAttribute("r", font.OverlayColor.R.ToString());
+                    color.SetAttribute("g", font.OverlayColor.G.ToString());
+                    color.SetAttribute("b", font.OverlayColor.B.ToString());
+                    color.SetAttribute("a", font.OverlayColor.A.ToString());
+
+                            XmlElement fontsetup = xmlDoc.CreateElement("Settings");
+                            fontsetup.SetAttribute("AlignMode", font.AlignMode.ToString());
+                            fontsetup.SetAttribute("Text", font.Text);
+                            fontsetup.SetAttribute("LineSpacing", font.LineSpacing.ToString());
+                            fontsetup.SetAttribute("File", System.IO.Path.GetFileName(font.TextureFilePath));
+                            fontsetup.AppendChild(color);
+                            NodeGameObject.AppendChild(fontsetup);
+                }
+            }
+            else
+                if (obj is AudioObject)
+                {
+
+                    AudioObject audio = obj as AudioObject;
+                    if (audio != null)
+                    {
+
+                        XmlElement fontsetup = xmlDoc.CreateElement("Settings");
+                        fontsetup.SetAttribute("Volume", audio.Volume.ToString());
+                        fontsetup.SetAttribute("PlayOnStart", audio.PlayOnStart.ToString());
+                        fontsetup.SetAttribute("Loop", audio.Loop.ToString());
+                        fontsetup.SetAttribute("File", System.IO.Path.GetFileName(audio.FilePath));
+                        NodeGameObject.AppendChild(fontsetup);
+                    }
+                }
+            if (obj is ParticleEmitter)
+            {
+
+                ParticleEmitter particles = obj as ParticleEmitter;
+                if (particles != null)
+                {
+                    XmlElement config = xmlDoc.CreateElement("Basic");
+                    config.SetAttribute("Burst",particles.Burst.ToString());
+                    config.SetAttribute("Enable", particles.Enabled.ToString());
+                    config.SetAttribute("File", System.IO.Path.GetFileName(particles.ImageName));
+                    config.SetAttribute("LifespanMin", particles.LifespanMin.ToString());
+                    config.SetAttribute("LifespanMax", particles.LifespanMax.ToString());
+                    config.SetAttribute("MaxParticles", particles.MaxParticles.ToString());
+                    config.SetAttribute("SecondsPerSpawnMin", particles.SecondsPerSpawnMin.ToString());
+                    config.SetAttribute("SecondsPerSpawnMax", particles.SecondsPerSpawnMax.ToString());
+
+                    XmlElement behavior = xmlDoc.CreateElement("Behaviour");
+                    behavior.SetAttribute("Rotation", particles.RotationStrength.ToString());
+                    //djoker... node or attribute 
+
+                  //  XmlElement nrotate = xmlDoc.CreateElement("Rotation");
+                   // nrotate.SetAttribute("value", particles.RotationStrength.ToString());
+                    //behavior.AppendChild(nrotate);
+
+                    XmlElement nangle = xmlDoc.CreateElement("SpawnAngle");
+                    nangle.SetAttribute("x", particles.SpawnAngleNoise.X.ToString());
+                    nangle.SetAttribute("y", particles.SpawnAngleNoise.Y.ToString());
+                    XmlElement direction = xmlDoc.CreateElement("SpawnDirection");
+                    direction.SetAttribute("x", particles.SpawnAngleNoise.X.ToString());
+                    direction.SetAttribute("y", particles.SpawnAngleNoise.Y.ToString());
+                   
+                    behavior.AppendChild(nangle);
+                    behavior.AppendChild(direction);
+
+                    
+                    XmlElement color = xmlDoc.CreateElement("Color");
+                    color.SetAttribute("Blend",particles.BlendMode.ToString());
+                    
+                    XmlElement startColor1 = xmlDoc.CreateElement("InitialColor1");
+                    startColor1.SetAttribute("r", particles.InitialColor1.R.ToString());
+                    startColor1.SetAttribute("g", particles.InitialColor1.G.ToString());
+                    startColor1.SetAttribute("b", particles.InitialColor1.B.ToString());
+                    startColor1.SetAttribute("a", particles.InitialColor1.A.ToString());
+                    color.AppendChild(startColor1);
+                    XmlElement startColor2 = xmlDoc.CreateElement("InitialColor2");
+                    startColor2.SetAttribute("r", particles.InitialColor2.R.ToString());
+                    startColor2.SetAttribute("g", particles.InitialColor2.G.ToString());
+                    startColor2.SetAttribute("b", particles.InitialColor2.B.ToString());
+                    startColor2.SetAttribute("a", particles.InitialColor2.A.ToString());
+                    color.AppendChild(startColor2);
+                    XmlElement endColor1 = xmlDoc.CreateElement("FinalColor1");
+                    endColor1.SetAttribute("r", particles.FinalColor1.R.ToString());
+                    endColor1.SetAttribute("g", particles.FinalColor1.G.ToString());
+                    endColor1.SetAttribute("b", particles.FinalColor1.B.ToString());
+                    endColor1.SetAttribute("a", particles.FinalColor1.A.ToString());
+                    color.AppendChild(endColor1);
+                    XmlElement endColor2 = xmlDoc.CreateElement("FinalColor2");
+                    endColor2.SetAttribute("r", particles.FinalColor2.R.ToString());
+                    endColor2.SetAttribute("g", particles.FinalColor2.G.ToString());
+                    endColor2.SetAttribute("b", particles.FinalColor2.B.ToString());
+                    endColor2.SetAttribute("a", particles.FinalColor2.A.ToString());
+                    color.AppendChild(endColor2);
+
+                    XmlElement eTrasf = xmlDoc.CreateElement("EmitterTransform");
+                    eTrasf.SetAttribute("InitialScaleMin", particles.InitialScaleMin.ToString());
+                    eTrasf.SetAttribute("InitialScaleMax", particles.InitialScaleMax.ToString());
+                    eTrasf.SetAttribute("InitialSpeedMin", particles.InitialSpeedMin.ToString());
+                    eTrasf.SetAttribute("InitialSpeedMax", particles.InitialSpeedMax.ToString());
+                    eTrasf.SetAttribute("FinalScaleMin", particles.FinalScaleMin.ToString());
+                    eTrasf.SetAttribute("FinalScaleMax", particles.FinalScaleMax.ToString());
+                    eTrasf.SetAttribute("FinalSpeedMin", particles.FinalSpeedMin.ToString());
+                    eTrasf.SetAttribute("FinalSpeedMax", particles.FinalSpeedMax.ToString());
+                    
+                    NodeGameObject.AppendChild(behavior);
+                    NodeGameObject.AppendChild(config);
+                    NodeGameObject.AppendChild(color);
+                    NodeGameObject.AppendChild(eTrasf);
+                }
+            }
+
+
+          List<ObjectComponent> components=  obj.GetComponents();
+          if (components!=null)
+          {
+              foreach(ObjectComponent component in components)
+              {
+                   if (component is PhysicalBody)
+                  {
+                      PhysicalBody pBody = (component as PhysicalBody);
+                      XmlElement body = xmlDoc.CreateElement("PhysicalBody");
+                      body.SetAttribute("Friction", pBody.Friction.ToString());
+                      body.SetAttribute("Restitution", pBody.Restitution.ToString());
+                      body.SetAttribute("BodyType", pBody.BodyType.ToString());
+                      body.SetAttribute("AngularDamping", pBody.AngularDamping.ToString());
+                      body.SetAttribute("LinearDamping", pBody.LinearDamping.ToString());
+                      body.SetAttribute("AngularVelocity", pBody.AngularVelocity.ToString());
+                      body.SetAttribute("IsBullet", pBody.IsBullet.ToString());
+                      body.SetAttribute("IsSensor", pBody.IsSensor.ToString());
+                      body.SetAttribute("FixedRotation", pBody.FixedRotation.ToString());
+                      body.SetAttribute("IgnoreGravity", pBody.IgnoreGravity.ToString());
+
+                      if (component is RectangleBody)
+                      {
+                          
+                          RectangleBody sBody = (component as RectangleBody);
+                          
+                          XmlElement shape = xmlDoc.CreateElement("Shape");
+                          shape.SetAttribute("Type", "Rectangle");
+                          shape.SetAttribute("Density", sBody.Density.ToString());
+                          shape.SetAttribute("Width", sBody.Width.ToString());
+                          shape.SetAttribute("Height", sBody.Height.ToString());
+                          body.AppendChild(shape);
+                          NodeGameObject.AppendChild(body);
+
+                      }else
+                          if (component is CircleBody)
+                          {
+                              
+                              CircleBody sBody = (component as CircleBody);
+                              XmlElement shape = xmlDoc.CreateElement("Shape");
+                              shape.SetAttribute("Type", "Circle");
+                              shape.SetAttribute("Density", sBody.Density.ToString());
+                              shape.SetAttribute("Radius", sBody.Radius.ToString());
+                              body.AppendChild(shape);
+                          } else
+                       if (component is TextureBody)
+                      {
+
+                          TextureBody sBody = (component as TextureBody);
+                          body.SetAttribute("Density", sBody.Density.ToString());
+                          XmlElement shape = xmlDoc.CreateElement("Shape");
+                          shape.SetAttribute("Type", "Polygon");
+                          shape.SetAttribute("Density", sBody.Density.ToString());
+                          shape.SetAttribute("Texture", System.IO.Path.GetFileName(sBody.ImageName));
+                          
+
+                           if(sBody.polygonos!=null)
+                           {
+                               XmlElement poly = xmlDoc.CreateElement("Polygons");
+                               for (int i=0;i<sBody.polygonos.Count;i++)
+                                {
+                                  Vector2[] poli= sBody.polygonos[i].ToArray();
+                                  if (poli != null)//não va o azar bater na tecla :P
+                                  {
+                                      XmlElement v = xmlDoc.CreateElement("Polygon");
+
+                                      for (int j = 0; j < poli.Length; j++)
+                                      {
+                                          XmlElement face = xmlDoc.CreateElement("Face");
+                                          face.SetAttribute("x", poli[j].X.ToString());
+                                          face.SetAttribute("y", poli[j].Y.ToString());
+                                          v.AppendChild(face);
+                                      }
+                                      poly.AppendChild(v);
+                                  }
+                               }
+
+                               
+                               shape.AppendChild(poly);
+
+                           }
+
+                          body.AppendChild(shape);
+                      }
+
+
+                      NodeGameObject.AppendChild(body);
+                     
+
+                  } else
+                   {
+                       ///que raio de merda se vai meter aqui .....
+                   }
+
+                  /*
+                
+                  if (component is RectangleBody)
+                  {
+                      RectangleBody pBody = (component as RectangleBody);
+                      XmlElement body = xmlDoc.CreateElement("PhysicalBody");
+                      body.SetAttribute("Name", "RectangleBody");
+                      body.SetAttribute("Friction", pBody.Friction.ToString());
+                      body.SetAttribute("Restitution", pBody.Restitution.ToString());
+                      body.SetAttribute("BodyType", pBody.BodyType.ToString());
+                      body.SetAttribute("AngularDamping", pBody.AngularDamping.ToString());
+                      body.SetAttribute("LinearDamping", pBody.LinearDamping.ToString());
+                      body.SetAttribute("AngularVelocity", pBody.AngularVelocity.ToString());
+                      body.SetAttribute("IsBullet", pBody.IsBullet.ToString());
+                      body.SetAttribute("IsSensor", pBody.IsSensor.ToString());
+                      body.SetAttribute("FixedRotation", pBody.FixedRotation.ToString());
+                      body.SetAttribute("IgnoreGravity", pBody.IgnoreGravity.ToString());
+                      body.SetAttribute("Density", pBody.Density.ToString());
+                      XmlElement shape = xmlDoc.CreateElement("Shape");
+                      shape.SetAttribute("Width", pBody.Width.ToString());
+                      shape.SetAttribute("Height", pBody.Height.ToString());
+                      body.AppendChild(shape);
+                      NodeGameObject.AppendChild(body);
+                      return NodeGameObject;
+
+                  } else
+                        if (component is CircleBody)
+                  {
+
+                      CircleBody pBody = (component as CircleBody);
+
+
+
+                      XmlElement body = xmlDoc.CreateElement("PhysicalBody");
+                      body.SetAttribute("Name", "CircleBody");
+                      body.SetAttribute("Friction", pBody.Friction.ToString());
+                      body.SetAttribute("Restitution", pBody.Restitution.ToString());
+                      body.SetAttribute("BodyType", pBody.BodyType.ToString());
+                      body.SetAttribute("AngularDamping", pBody.AngularDamping.ToString());
+                      body.SetAttribute("LinearDamping", pBody.LinearDamping.ToString());
+                      body.SetAttribute("AngularVelocity", pBody.AngularVelocity.ToString());
+                      body.SetAttribute("IsBullet", pBody.IsBullet.ToString());
+                      body.SetAttribute("IsSensor", pBody.IsSensor.ToString());
+                      body.SetAttribute("FixedRotation", pBody.FixedRotation.ToString());
+                      body.SetAttribute("IgnoreGravity", pBody.IgnoreGravity.ToString());
+                      body.SetAttribute("Density", pBody.Density.ToString());
+                      XmlElement shape = xmlDoc.CreateElement("Shape");
+                      shape.SetAttribute("Radius", pBody.Radius.ToString());
+                      body.AppendChild(shape);
+
+
+                      NodeGameObject.AppendChild(body);
+                      return NodeGameObject;
+                  } else
+                  if (component is TextureBody)
+                  {
+                      TextureBody pBody = (component as TextureBody);
+
+
+
+                      XmlElement body = xmlDoc.CreateElement("PhysicalBody");
+                      body.SetAttribute("Name", "TextureBody");
+                      body.SetAttribute("Friction", pBody.Friction.ToString());
+                      body.SetAttribute("Restitution", pBody.Restitution.ToString());
+                      body.SetAttribute("BodyType", pBody.BodyType.ToString());
+                      body.SetAttribute("AngularDamping", pBody.AngularDamping.ToString());
+                      body.SetAttribute("LinearDamping", pBody.LinearDamping.ToString());
+                      body.SetAttribute("AngularVelocity", pBody.AngularVelocity.ToString());
+                      body.SetAttribute("IsBullet", pBody.IsBullet.ToString());
+                      body.SetAttribute("IsSensor", pBody.IsSensor.ToString());
+                      body.SetAttribute("FixedRotation", pBody.FixedRotation.ToString());
+                      body.SetAttribute("IgnoreGravity", pBody.IgnoreGravity.ToString());
+                      body.SetAttribute("Density", pBody.Density.ToString());
+                      XmlElement shape = xmlDoc.CreateElement("Shape");
+                      shape.SetAttribute("Texture",  System.IO.Path.GetFileName(pBody.ImageName));
+                      body.AppendChild(shape);
+
+                      NodeGameObject.AppendChild(body);
+                      return NodeGameObject;
+
+                  } 
+                  if (component is PhysicalBody)
+                  {
+                      PhysicalBody pBody = (component as PhysicalBody);
+                      XmlElement body = xmlDoc.CreateElement("PhysicalBody");
+                      body.SetAttribute("Name", "Empty");
+                      body.SetAttribute("Friction", pBody.Friction.ToString());
+                      body.SetAttribute("Restitution", pBody.Restitution.ToString());
+                      body.SetAttribute("BodyType", pBody.BodyType.ToString());
+                      body.SetAttribute("AngularDamping", pBody.AngularDamping.ToString());
+                      body.SetAttribute("LinearDamping", pBody.LinearDamping.ToString());
+                      body.SetAttribute("AngularVelocity", pBody.AngularVelocity.ToString());
+                      body.SetAttribute("IsBullet", pBody.IsBullet.ToString());
+                      body.SetAttribute("IsSensor", pBody.IsSensor.ToString());
+                      body.SetAttribute("FixedRotation", pBody.FixedRotation.ToString());
+                      body.SetAttribute("IgnoreGravity", pBody.IgnoreGravity.ToString());
+                  
+
+
+                      NodeGameObject.AppendChild(body);
+                      return NodeGameObject;
+
+                  } else
+                  {
+                      //ho my ho my!!!
+                  }
+                  */
+
+
+              }
+
+          }
+
+
+
             return NodeGameObject;
         }
         public static bool SaveXmlScene(string path,GameScene scene)

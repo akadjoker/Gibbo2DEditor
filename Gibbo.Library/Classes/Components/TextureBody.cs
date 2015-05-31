@@ -58,7 +58,7 @@ namespace Gibbo.Library
         [NonSerialized]
 #endif
         private uint[] data;
-
+        public List<Vertices> polygonos;
         #endregion
 
         #region properties
@@ -144,10 +144,12 @@ namespace Gibbo.Library
                 outline.Translate(ref centroid);
                 outline = SimplifyTools.DouglasPeuckerSimplify(outline, 0.1f);
                 List<Vertices> result = Triangulate.ConvexPartition(outline, TriangulationAlgorithm.Bayazit);
+                polygonos = new List<Vertices>(result.Count);
                 Vector2 scale = ConvertUnits.ToSimUnits(Transform.Scale);
                 foreach (Vertices vertices in result)
                 {
                     vertices.Scale(ref scale);
+                    polygonos.Add(vertices);
                 }
 
                 Transform.GameObject.Body = BodyFactory.CreateCompoundPolygon(SceneManager.ActiveScene.World, result, density);
