@@ -89,6 +89,7 @@ namespace Gibbo.Editor.WPF
         private Rectangle tilesetSelectedArea;
 
         private bool leftMouseKeyDown;
+        private bool leftMouseKeyisDown=false;
 
         private bool mouseDragStarted = false;
         private Vector2 mouseClickPosition = Vector2.Zero;
@@ -967,9 +968,65 @@ namespace Gibbo.Editor.WPF
             if (GameInput.IsKeyDown(Keys.LeftControl) && GameInput.IsKeyPressed(Keys.V)) EditorCommands.PasteSelectedObjects();
 
             if (!TileSetMode)
-            { 
-            if (GameInput.IsKeyDown(Keys.LeftControl) && leftMouseKeyDown) 
             {
+
+                if (GameInput.IsKeyPressed(Keys.C))
+                {
+                    foreach (GameObject obj in EditorHandler.SelectedGameObjects)
+                    {
+                        if (obj is Gibbo.Library.Path)
+                        {
+                            Gibbo.Library.Path path = obj as Gibbo.Library.Path;
+                            if (path != null)
+                            {
+                                path.Clear();
+
+                                EditorCommands.ShowOutputMessage("Path (" + path.Name + " clear.");
+                                return;
+                            }
+                        }
+                    }
+                }
+                if (GameInput.IsKeyPressed(Keys.L))
+                {
+                    foreach (GameObject obj in EditorHandler.SelectedGameObjects)
+                    {
+                        if (obj is Gibbo.Library.Path)
+                        {
+                            Gibbo.Library.Path path = obj as Gibbo.Library.Path;
+                            if (path != null)
+                            {
+                                path.Clear();
+
+                                EditorCommands.ShowOutputMessage("Path (" + path.Name + " clear catamull points.");
+                                return;
+                            }
+                        }
+                    }
+                }
+                if (GameInput.IsKeyPressed(Keys.P))
+                {
+                    foreach (GameObject obj in EditorHandler.SelectedGameObjects)
+                    {
+                        if (obj is Gibbo.Library.Path)
+                        {
+                            Gibbo.Library.Path path = obj as Gibbo.Library.Path;
+                            if (path != null)
+                            {
+                                path.GetCatmullPoints();
+                                
+                                EditorCommands.ShowOutputMessage("Caculate Path (" + path.Name + ") catamull points:" + path.Catmullpoints.Count);
+                                return;
+                            }
+                        }
+                    }
+                }
+
+
+             if (GameInput.IsKeyDown(Keys.LeftControl) && leftMouseKeyDown) 
+            {
+               
+
                 foreach (GameObject obj in EditorHandler.SelectedGameObjects)
                 {
                      if(obj is Gibbo.Library.Path)
@@ -978,15 +1035,27 @@ namespace Gibbo.Editor.WPF
                          Gibbo.Library.Path path = obj as Gibbo.Library.Path;
                          if(path!=null)
                          {
-                             path.Points.Add(new Vector2( mouseWorldPosition.X, mouseWorldPosition.Y));
-                             return;
+                           
+                             if(!leftMouseKeyisDown)
+                             {
+                              path.Points.Add(new Vector2( mouseWorldPosition.X, mouseWorldPosition.Y));
+                              EditorCommands.ShowOutputMessage("Add  point to Path (" + path.Name + ") total:" + path.Points.Count);
+             
+                             }
                          }
                      }
                         
                     
                 }
-
+                if (!leftMouseKeyisDown)
+                {
+                    leftMouseKeyisDown = true;
+                }
+            }else
+            {
+                leftMouseKeyisDown = false;
             }
+            
         }//****************************
 
 

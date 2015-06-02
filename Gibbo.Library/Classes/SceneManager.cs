@@ -396,6 +396,11 @@ namespace Gibbo.Library
                 NodeGameObject.SetAttribute("Type", "FontObject");
             }
                else
+                   if (obj is Path)
+                   {
+                       NodeGameObject.SetAttribute("Type", "PathLine");
+                   }
+                   else
                    if (obj is AudioObject)
                    {
                        NodeGameObject.SetAttribute("Type", "AudioObject");
@@ -681,6 +686,25 @@ namespace Gibbo.Library
                 }
             }
             else
+                if (obj is Path)
+                {
+                     Path path = obj as Path;
+                     if (path != null)
+                     {
+                         XmlElement nPoints = xmlDoc.CreateElement("Points");
+
+                         foreach(Vector2  point in path.Points)
+                         {
+                               XmlElement nPoint = xmlDoc.CreateElement("Point");
+                               nPoint.SetAttribute("x", point.X.ToString());
+                               nPoint.SetAttribute("y", point.X.ToString());
+                               nPoints.AppendChild(nPoint);
+                         }
+                         NodeGameObject.AppendChild(nPoints);
+
+                     }
+                }else
+
                 if (obj is AudioObject)
                 {
 
@@ -987,6 +1011,7 @@ namespace Gibbo.Library
 
             return NodeGameObject;
         }
+        //djoker
         public static bool SaveXmlScene(string path,GameScene scene)
         {
             if (ActiveScene == null) return false;

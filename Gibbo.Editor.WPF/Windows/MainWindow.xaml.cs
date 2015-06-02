@@ -807,7 +807,7 @@ namespace Gibbo.Editor.WPF
             EditorCommands.SaveProject();
             EditorCommands.SaveScene(false);
         }
-
+        //djoker
         private void exportSceneXMLBtn_Click(object sender, RoutedEventArgs e)
         {
             EditorCommands.SaveProject();
